@@ -3,7 +3,7 @@
 #include<windows.h>
 #include<conio.h>
 using namespace std;
-void delay()
+void delay()    //for delay in time 
 {
     for(int i=0;i<3;i++)
     {
@@ -11,6 +11,8 @@ void delay()
 		Sleep(1000);
 	}
 }
+
+//This Class contains all information related to account 
 class Bank
 {
     private:
@@ -33,35 +35,37 @@ class Bank
             return account_no;
         }
 
-        void open_account();
-        void balance_enquiry(int account_no);
-        void deposit(int account_no,int amount);
-        void withdraw(int account_no,int amount);
-        void store(Bank p);
-        void display(Bank p);
-        void display(int account_no);
-        void display_all();
-        bool creat_pin();
-        bool pin_verify(int);
-        void delete_account(int);
-        static bool admin_verification();
+        //Declaration of all function 
+        void open_account();                      //function to open an account
+        void balance_enquiry(int account_no);     //to show information of perticuler account                  
+        void deposit(int account_no,int amount);  //this fuction add money to your account 
+        void withdraw(int account_no,int amount); //this fuction subtract money to your aacount
+        void store(Bank p);                       //this function store information of  your account              
+        void display(int account_no);             //display the requested account information                 
+        void display_all();                       //display all account information      
+        bool creat_pin();                         //this funtion helps the user to creat correct
+        bool pin_verify(int);                     //this funtion ensures correct pin is entered  pin 
+        void delete_account(int);                 //this funtion delete an acccount  
+        static bool admin_verification();         //this funtion verify admin password
 
 };
-int Bank::next_account=0;
-map<int,Bank>Bank::accounts;
-void Bank::open_account()
+int Bank::next_account=0;     //This holds Account no. of last Account  
+map<int,Bank>Bank::accounts;  //Map stores all the data entered by user
+
+
+void Bank::open_account() 
 {
     int flag=3;
     Bank new_account;
+/*---Collecting personal information---*/
     cout<<"Enter your First Name:";
     cin>>new_account.first_name;
     cout<<"Enter your Last Name:";
     cin>>new_account.last_name;
     label:
-
     cout<<"Enter depositing amount:";
     cin>>new_account.balance;
-    if(new_account.balance>=500)
+    if(new_account.balance>=500)  //checking initial amount greater then greater than 500
     {
         next_account++;
         new_account.account_no=next_account;
@@ -72,13 +76,10 @@ void Bank::open_account()
             cout<<"\t\tYour new account is creating please wait";
             delay();
             cout<<"\nCongratulation your account has been created!!";
-            cout<<"Here are your details:\n\n";
+            cout<<"\nHere are your details:\n\n";
             new_account.display(new_account.get_account_no());
             cout<<"Press any key to continue";
             getch();
-      
-            
-			
         }
 
 
@@ -94,14 +95,16 @@ void Bank::open_account()
 
 
 }
+
 void Bank::balance_enquiry(int account_no)
 {
 
-    map<int,Bank>::iterator itr=accounts.find(account_no);
+    map<int,Bank>::iterator itr=accounts.find(account_no); 
     if(accounts.find(account_no)!=accounts.end())
     {
-        if(pin_verify(account_no))
+        if(pin_verify(account_no))      
         {
+            //diplaying the account info
             cout<<"Here are your details:\n\n";
             display(account_no);
             cout<<"Press any key to continue";
@@ -226,10 +229,12 @@ void Bank::store(Bank p)
 void Bank::display(int account_no)
 {
     map<int,Bank>::iterator itr=accounts.find(account_no);
+    cout<<"\n-----------------------------------------------\n";
     cout<<"Account Number:"<<itr->second.account_no<<endl;
     cout<<"First Name:"<<itr->second.first_name<<endl;
     cout<<"Last Name:"<<itr->second.last_name<<endl;
-    cout<<"Balance:"<<itr->second.balance<<endl;
+    cout<<"Balance:"<<itr->second.balance;
+    cout<<"\n-----------------------------------------------\n";
 }
 bool Bank:: admin_verification()
 {
@@ -256,10 +261,18 @@ void Bank::display_all()
     if( admin_verification())
     {
         cout<<"All account details:\n";
-            for(it=accounts.begin(); it!=accounts.end(); it++)
+        for(it=accounts.begin(); it!=accounts.end(); it++)
         {
-            display(it->second.account_no);
-            cout<<"\n";
+            if(accounts.size()!=0){
+                display(it->second.account_no);
+                cout<<"\n";
+            }
+            else{
+                cout<<"No Account to show ";
+                getch();
+            }
+
+            
         }
     }
     else
@@ -355,7 +368,12 @@ int main()
     start();
     while(choice!=7)
     {
-        cout<<"\n\n\t\t\tBank Management System"<<endl;
+        cout<<"\t\t-------------------------------------------\n";
+        cout<<"\t\t|                                          |\n";                                            
+        cout<<"\t\t|          Bank Management System          |\n";  
+        cout<<"\t\t|                                          |\n";        
+        cout<<"\t\t-------------------------------------------\n";
+       // cout<<"\n\n\t\t\tBank Management System"<<endl;
         cout<<"\n\t\tSelect one option below "<<endl;
         cout<<"\t\t1 Open an Account"<<endl;
         cout<<"\t\t2 Balance Enquiry"<<endl;
@@ -417,7 +435,6 @@ int main()
                 break;
             default:
                 cout<<"Enter a valid choice";
-            
         }
 
 
