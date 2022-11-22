@@ -11,8 +11,7 @@ void delay()    //for delay in time
 		Sleep(1000);
 	}
 }
-
-//This Class contains all information related to account 
+/*This Class contains all information related to account */
 class Bank
 {
     private:
@@ -81,8 +80,6 @@ void Bank::open_account()
             cout<<"Press any key to continue";
             getch();
         }
-
-
     }
     else
     {
@@ -92,19 +89,16 @@ void Bank::open_account()
             goto label;
         cout<<"Sorry try Again1";
     }
-
-
 }
-
-void Bank::balance_enquiry(int account_no)
+void Bank::balance_enquiry(int account_no)  
 {
 
-    map<int,Bank>::iterator itr=accounts.find(account_no); 
-    if(accounts.find(account_no)!=accounts.end())
+    map<int,Bank>::iterator itr=accounts.find(account_no);  //defining an iterator 
+    if(accounts.find(account_no)!=accounts.end())           //checking if account exist or not 
     {
         if(pin_verify(account_no))      
         {
-            //diplaying the account info
+            //displaying the account info
             cout<<"Here are your details:\n\n";
             display(account_no);
             cout<<"Press any key to continue";
@@ -117,7 +111,7 @@ void Bank::balance_enquiry(int account_no)
             getch();
         }
     }
-    else
+    else                                 //if account not found 
     {
         cout<<"Account don't exist\n";
         cout<<"Try again";
@@ -129,17 +123,16 @@ void Bank::balance_enquiry(int account_no)
 }
 void Bank::deposit(int account_no,int amount)
 {
-    map<int,Bank>::iterator itr=accounts.find(account_no);
+    map<int,Bank>::iterator itr=accounts.find(account_no);//defining an iterator
     if(accounts.find(account_no)!=accounts.end())
     {
         if(pin_verify(account_no))
         {
-            itr->second.balance+=amount;
+            itr->second.balance+=amount;   //incrementing the balance
             cout<<"Here are your details:\n\n";
             display(account_no);
             cout<<"Press any key to continue";
             getch();
-
         }
         else{
             cout<<"Try Again\n";
@@ -151,11 +144,11 @@ void Bank::deposit(int account_no,int amount)
     {
         cout<<"Account don't exist\n";
         cout<<"Try again";
-         cout<<"Press any key to continue";
+        cout<<"Press any key to continue";
         getch();
     }
 }
-void Bank::withdraw(int account_no,int amount)
+void Bank::withdraw(int account_no,int amount)  
 {
     map<int,Bank>::iterator itr=accounts.find(account_no);
 
@@ -163,16 +156,15 @@ void Bank::withdraw(int account_no,int amount)
     {
         if(pin_verify(account_no))
         {
-            amount= itr->second.balance-amount;
-            if(amount<0){
-                cout<<"Insufficient Balance";
+            amount= itr->second.balance-amount;  
+            if(amount<0){                        //checking if current balance is sufficient or not 
+                cout<<"Insufficient Balance\n";
                 cout<<"Press any key to continue";
                 getch();
             }
-            
             else
             {
-                itr->second.balance=amount;
+                itr->second.balance=amount; //decrementing account balance1
                 cout<<"Here are your details:\n";
                 display(account_no);
                  cout<<"Press any key to continue";
@@ -192,7 +184,7 @@ void Bank::withdraw(int account_no,int amount)
     }
 
 }
-void Bank::delete_account(int account_no)
+void Bank::delete_account(int account_no)    //deleteing an account
 {
     map<int,Bank>::iterator itr=accounts.find(account_no);
     if(accounts.find(account_no)!=accounts.end())
@@ -204,7 +196,6 @@ void Bank::delete_account(int account_no)
             delay();
             cout<<"Your account has been removed";
             getch();
-            
         }
         else{
             cout<<"Try Again";
@@ -218,16 +209,15 @@ void Bank::delete_account(int account_no)
         cout<<"Try again";
         getch();
     }
-
-
 }
-void Bank::store(Bank p)
+void Bank::store(Bank p)            //storing all the information 
 {
     accounts.insert({p.get_account_no(),p});
 
 }
 void Bank::display(int account_no)
 {
+    //displaying account information
     map<int,Bank>::iterator itr=accounts.find(account_no);
     cout<<"\n-----------------------------------------------\n";
     cout<<"Account Number:"<<itr->second.account_no<<endl;
@@ -236,43 +226,35 @@ void Bank::display(int account_no)
     cout<<"Balance:"<<itr->second.balance;
     cout<<"\n-----------------------------------------------\n";
 }
-bool Bank:: admin_verification()
+bool Bank:: admin_verification()  
 {
     string admin_password,entered_pass;
     cout<<"\nEnter Password:";
     cin>>entered_pass;
-    admin_password="kunal@123456";
+    admin_password="kunal@123456";  //admin password
     if(entered_pass==admin_password)
     {
         return true;
     }
     else
         return false;
-
-
 }
-
-
-void Bank::display_all()
+void Bank::display_all()  //dispalying all account information 
 {
-
     map<int,Bank>::iterator it;
     cout<<"Only admin can access it";
     if( admin_verification())
     {
         cout<<"All account details:\n";
-        for(it=accounts.begin(); it!=accounts.end(); it++)
+        for(it=accounts.begin(); it!=accounts.end(); it++) //traversing in all accounts
         {
             if(accounts.size()!=0){
                 display(it->second.account_no);
                 cout<<"\n";
             }
             else{
-                cout<<"No Account to show ";
-                getch();
+                cout<<"No Account to show ";  //if no account exist
             }
-
-            
         }
     }
     else
@@ -290,7 +272,7 @@ bool Bank::creat_pin()
     cout<<"Enter four digit Pin:";
     cin>>pin;
     temp=pin;
-    for(i=0;temp!=0;i++)
+    for(i=0;temp!=0;i++)   //checking length of pin 
         temp=temp/10;
     if(i==4)
     {
@@ -309,10 +291,8 @@ bool Bank::creat_pin()
         return false;
 
     }
-
-
 }
-bool Bank::pin_verify(int account_no)
+bool Bank::pin_verify(int account_no)   //pin verfication
 {
     map<int,Bank>::iterator itr=accounts.find(account_no);
     int flag_pin=0,flag=3;
@@ -331,7 +311,6 @@ bool Bank::pin_verify(int account_no)
             cout<<"Pin not verified\n";
             cout<<"Try Again\n";
             flag--;
-
             if(flag==0)
             {
                 cout<<"Sorry You have reached your limit";
@@ -345,20 +324,18 @@ bool Bank::pin_verify(int account_no)
     else
         cout<<"Account don't exist";
 }
-void start()
+void start()      //adding some animation
 {
     char arr[]={'B','A','N','K',' ','M','A','N','A','G','E','M','E'
 			,'N','T',' ','S','Y','S','T','E','M'};
 			cout<<"\n\n\n\n\n\t\t\t";
-			for(int i=0;i<24;i++){
+			for(int i=0;i<22;i++){
 				cout<<arr[i];
 				Sleep(30);
 			}
 			Sleep(1000);
 			system("CLS");
 }
-
-
 int main()
 {
     int choice=1,amount=0;
@@ -368,40 +345,37 @@ int main()
     start();
     while(choice!=7)
     {
-        cout<<"\t\t-------------------------------------------\n";
-        cout<<"\t\t|                                          |\n";                                            
-        cout<<"\t\t|          Bank Management System          |\n";  
-        cout<<"\t\t|                                          |\n";        
-        cout<<"\t\t-------------------------------------------\n";
-       // cout<<"\n\n\t\t\tBank Management System"<<endl;
-        cout<<"\n\t\tSelect one option below "<<endl;
-        cout<<"\t\t1 Open an Account"<<endl;
-        cout<<"\t\t2 Balance Enquiry"<<endl;
-        cout<<"\t\t3 Deposit"<<endl;
-        cout<<"\t\t4 Withdrawal"<<endl;
-        cout<<"\t\t5 Close an Account"<<endl;
-        cout<<"\t\t6 Show all account"<<endl;
-        cout<<"\t\t7 Quit"<<endl;
-        cout<<"\t\tEnter your choice:";
-         cin>>choice;
+        // cout<<"\t\t-------------------------------------------\n";
+        // cout<<"\t\t|                                          |\n";                                            
+        // cout<<"\t\t|          Bank Management System          |\n";  
+                
+        cout<<"\n\n\t\t\t********Bank Management System********"<<endl;
+        cout<<"\t\t      ***********Welcome to Yes Bank************";
+    cout<<"\n\n\t\t\t\tSelect one option below "<<endl;
+        cout<<"\t\t\t\t1 Open an Account"<<endl;
+        cout<<"\t\t\t\t2 Balance Enquiry"<<endl;
+        cout<<"\t\t\t\t3 Deposit"<<endl;
+        cout<<"\t\t\t\t4 Withdrawal"<<endl;
+        cout<<"\t\t\t\t5 Close an Account"<<endl;
+        cout<<"\t\t\t\t6 Show all account"<<endl;
+        cout<<"\t\t\t\t7 Quit"<<endl;
+        cout<<"\t\t\t\tEnter your choice:";
+         cin>>choice;   //selecting choice
        
         system("ClS");
         switch(choice)
         {
-            case 1:
+            case 1:                           //opening account
                 b.open_account();
                 system("ClS");
                 break;
-
-            case 2:
+            case 2:                           //balance enquiry  
                 cout<<"Enter account number:";
                 cin>>account_no;
                 b.balance_enquiry(account_no);
                 system("ClS");
                 break;
-
-
-            case 3:
+            case 3:                           //depositing amount 
                  cout<<"Enter account number:";
                 cin>>account_no;
                 cout<<"Enter Depositing amount:";
@@ -409,9 +383,7 @@ int main()
                 b.deposit(account_no,amount);
                 system("ClS");
                 break;
-
-
-            case 4:
+            case 4:                         //withdrawing amount 
                  cout<<"Enter account number:";
                 cin>>account_no;
                 cout<<"Enter withdrawal amount:";
@@ -419,15 +391,15 @@ int main()
                 b.withdraw(account_no,amount);
                 system("ClS");
                 break;
-            case 5:
+            case 5:                        //deleting account 
                 cout<<"Enter account no:";
                 cin>>account_no;
                 b.delete_account(account_no);
                 system("ClS");
                 break;
-
-            case 6:
+            case 6:                       //diplaying all account information
                b.display_all();
+               getch();
                system("ClS");
                break;
             case 7:
@@ -436,10 +408,6 @@ int main()
             default:
                 cout<<"Enter a valid choice";
         }
-
-
     }
-
-
     return 0;
 }
