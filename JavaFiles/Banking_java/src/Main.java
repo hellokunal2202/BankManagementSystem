@@ -13,8 +13,6 @@ class Bank
     private static HashMap<Integer, Bank> accounts = new HashMap<Integer, Bank>();
     private static int next_account = 0;
     private int pin;
-    // private Object label;
-
     public Bank()
     {
         account_no = 0;
@@ -22,7 +20,6 @@ class Bank
 
     }
 
-    //    next_account=0;
     public int get_account_no() {
         return account_no;
     }
@@ -35,20 +32,12 @@ class Bank
         new_account.first_name = sc.next();
         System.out.println("Enter your Last Name:");
         new_account.last_name = sc.next();
-
-
         do
         {
             System.out.println("Enter depositing amount:");
             new_account.balance = sc.nextInt();
             if (new_account.balance >= 500)
             {
-
-                // for(int i=0;i<5;i++)
-                // {
-                //     System.out.println(".";
-                //     Sleep(1000);
-                // }
                 next_account++;
                 new_account.account_no = next_account;
                 if (new_account.creat_pin())
@@ -56,7 +45,6 @@ class Bank
                     System.out.println("Please Wait\n");
                     new_account.store(new_account);
                     System.out.println("\nCongratulation your account has been created!!");
-                    System.out.println("\nHere are your details:\n");
                     new_account.display(new_account.get_account_no());
                     break;
                 }
@@ -94,7 +82,6 @@ class Bank
 
 
     }
-
     public void deposit(int account_no, int amount)
     {
         //  accounts:iterator itr=accounts.find(account_no);
@@ -170,11 +157,13 @@ class Bank
 
     void display(int account_no)
     {
-
+        System.out.println("Here are your details:");
+        System.out.println("---------------------------------------------------------");
         System.out.println("Account Number:" + accounts.get(account_no).account_no );
         System.out.println("First Name:" + accounts.get(account_no).first_name );
         System.out.println("Last Name:" + accounts.get(account_no).last_name );
         System.out.println("Balance:" + accounts.get(account_no).balance );
+        System.out.println("---------------------------------------------------------");
 
     }
 
@@ -190,8 +179,6 @@ class Bank
             return true;
         else
             return false;
-
-
     }
 
 
@@ -298,7 +285,8 @@ public class Main
         Bank b= new Bank();
         int account_no;
         String fname,lname;
-
+        System.out.println("\n\n\t\t\t********Bank Management System********");
+        System.out.println("\t\t   ***********Welcome to Yes Bank************");
         while(choice!=7)
         {
             System.out.println("\t\tSelect one option below ");
@@ -354,14 +342,8 @@ public class Main
                     System.out.println("Enter a valid choice");
 
             }
-
-
         }
-
-
-        // return 0;
     }
-
 }
 
 
